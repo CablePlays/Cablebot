@@ -55,14 +55,14 @@ client.on(Events.InteractionCreate, async interaction => {
     }
 
     try {
-        command.execute(interaction)
+        await command.execute(interaction)
     } catch (error) {
         console.error(error)
 
         if (interaction.replied || interaction.deferred) {
-            await interaction.followUp({ content: 'There was an error while executing this command!', flags: MessageFlags.Ephemeral })
+            interaction.followUp({ content: 'There was an error while executing this command!', flags: MessageFlags.Ephemeral }).catch(console.error)
         } else {
-            await interaction.reply({ content: 'There was an error while executing this command!', flags: MessageFlags.Ephemeral })
+            interaction.reply({ content: 'There was an error while executing this command!', flags: MessageFlags.Ephemeral }).catch(console.error)
         }
     }
 })
@@ -77,9 +77,21 @@ for (const file of eventFiles) {
     const event = (await import(url.pathToFileURL(filePath).href)).default
 
     if (event.once) {
-        client.once(event.name, (...args) => event.execute(client, ...args))
+        client.once(event.name, async (...args) => {
+            try {
+                await event.execute(client, ...args)
+            } catch (error) {
+                console.error(error)
+            }
+        })
     } else {
-        client.on(event.name, (...args) => event.execute(client, ...args))
+        client.on(event.name, async (...args) => {
+            try {
+                await event.execute(client, ...args)
+            } catch (error) {
+                console.error(error)
+            }
+        })
     }
 }
 
