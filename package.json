@@ -1,0 +1,28 @@
+{
+  "name": "digitalcable",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon index",
+    "start": "node index",
+    "dc": "node deploy-commands"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "discord.js": "^14.17.3",
+    "dotenv": "^16.4.7",
+    "file-system-db": "^2.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  },
+  "nodemonConfig": {
+      "ignore": [
+          "data/"
+      ]
+  }
+}
