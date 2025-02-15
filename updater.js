@@ -25,5 +25,5 @@ export function start(c) {
     client = c
     setInterval(() => {
         run().catch(console.error)
-    }, 120 * 1000)
+    }, 5 * 60 * 1000)
 }
